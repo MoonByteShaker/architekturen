@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>JavaScript Patterns</title>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<script>
+			var data = {
+				first_name:"Super",
+				last_name:"Man",
+				age:"unknown",
+				username:"o_O"
+			};
+
+			// ################## validator ##################
+			var validator = {
+				strategyTypes:{},
+				messages:[],
+				config:{},
+				validate:function (data) {
+					var dataKey, strategyType, strategy, msg, result_ok;
+					this.messages = [];
+
+					for (dataKey in data) {
+						debugger;
+						if (data.hasOwnProperty(dataKey)) {
+							// ################## Stragie-Typ wird gewählt ##################
+							strategyType = this.config[dataKey];
+							// ################## Strategie wird gewählt ##################
+							strategy = this.strategyTypes[strategyType];
+
+							// ################## Problembehandlung ##################
+							if (!strategyType)
+								continue;
+
+							if (!strategy) {
+								throw {
+									name:"ValidationError",
+									message:"No handler to validate strategyType " + strategyType
+								};
+							}
+							// ################## Strategie wird ausgeführt ##################
+							result_ok = strategy.validate(data[dataKey]);
+
+							if (!result_ok) {
+								msg = "Invalid value for *" + dataKey + "*, " + strategy.instructions;
+								this.messages.push(msg);
+							}
+						}
+					}
+					return this.hasErrors();
+				},
+				// helper
+				hasErrors:function () {
+					return this.messages.length !== 0;
+				}
+			};
+			// ################## Strategien ##################
+			validator.strategyTypes.isNonEmpty = {
+				validate:function (value) {
+					return value !== "";
+				},
+				instructions:"the value cannot be empty"
+			};
+
+			validator.strategyTypes.isNumber = {
+				validate:function (value) {
+					return !isNaN(value);
+				},
+				instructions:"the value can only be a valid number, e.g. 1, 3.14 or 2010"
+			};
+
+			validator.strategyTypes.isAlphaNum = {
+				validate:function (value) {
+					return !/[^a-z0-9]/i.test(value);
+				},
+				instructions:"the value can only contain characters and numbers, no special symbols"
+			};
+
+			// ################## Anwendung der Strategien auf die Daten ##################
+			validator.config = {
+				first_name:'isNonEmpty',
+				age:'isNumber',
+				username:'isAlphaNum'
+			};
+
+			// ################## helper ##################
+			if (validator.hasErrors()) {
+				console.log(validator.messages.join("\n"));
+			}
+
+			// ################## Ausführung ##################
+			validator.validate(data);
+		</script>
+	</body>
+</html>

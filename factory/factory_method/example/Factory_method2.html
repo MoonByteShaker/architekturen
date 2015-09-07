@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Factory method example 2</title>
+	</head>
+	<body>
+		<script charset="utf-8">
+			var fromPrototype = function(prototype, object) {
+				var newObject = Object.create(prototype);
+				for (var prop in object) {
+					if (object.hasOwnProperty(prop)) {
+						newObject[prop] = object[prop];
+					}
+				}
+			  return newObject;
+			};
+
+			// Define the Pizza product
+			var Pizza = {
+				description: 'Plain Generic Pizza'
+			};
+
+			// And the basic PizzaStore
+			var PizzaStore = {
+				createPizza: function(type) {
+					if (type == 'cheese') {
+						return fromPrototype(Pizza, {
+							description: 'Cheesy, Generic Pizza'
+						});
+					} else if (type == 'veggie') {
+						return fromPrototype(Pizza, {
+							description: 'Veggie, Generic Pizza'
+						});
+					}
+				}
+			};
+
+			var firstPizzaStore = Object.create(PizzaStore);
+			var firstPizza = firstPizzaStore.createPizza("cheese"); // returns 'Generic pizza created'
+
+			debugger;
+
+			var ChicagoPizzaStore = fromPrototype(PizzaStore, {
+				createPizza: function(type) {
+					if (type == 'cheese') {
+						return fromPrototype(Pizza, {
+							description: 'Cheesy, Deep-dish Chicago Pizza'
+						});
+					} else if (type == 'veggie') {
+						return fromPrototype(Pizza, {
+							description: 'Veggie, Deep-dish Chicago Pizza'
+						});
+					}
+				}
+			});
+
+			var CaliforniaPizzaStore = fromPrototype(PizzaStore, {
+				createPizza: function(type) {
+					if (type == 'cheese') {
+						return fromPrototype(Pizza, {
+							description: 'Cheesy, Tasty California Pizza'
+						});
+					} else if (type == 'veggie') {
+						return fromPrototype(Pizza, {
+							description: 'Veggie, Tasty California Pizza'
+						});
+					}
+				}
+			});
+
+			var chicagoStore = Object.create(ChicagoPizzaStore);
+			var pizza = chicagoStore.createPizza('veggie');
+			console.log(pizza.description); // returns 'Veggie, Deep-dish Chicago Pizza'
+		</script>
+	</body>
+</html>

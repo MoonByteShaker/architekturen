@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>simple strategy 1</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var data = {};
+            var strategyObject = function () {
+                this.strategy = null;
+            };
+
+            strategyObject.prototype = {
+                setStrategy: function (strategy) {
+                    this.strategy = strategy;
+                },
+                applyStrategy: function (data) {
+                    return this.strategy.applyStrategy(data);
+                }
+            };
+
+            var strategies = {
+                strategyOne: function () {
+                    this.applyStrategy = function () {
+
+                        return /*value*/;
+                    }
+                },
+                strategyTwo: function () {
+                    this.applyStrategy = function () {
+
+                        return /*value*/;
+                    }
+                }
+            };
+
+            var strategy = new strategyObject();
+            strategy.setStrategy(strategies.strategyOne);
+            debugger;
+        </script>
+    </body>
+</html>

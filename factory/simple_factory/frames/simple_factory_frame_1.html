@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>simple factory scaffold 1</title>
+	</head>
+	<body>
+		<script charset="utf-8">
+			function ObjectCreater() {}
+
+			ObjectCreater.prototype.whoAmI = function () {
+				return "I am " + this.name;
+			};
+
+			ObjectCreater.factory = function (type) {
+				var constructor = type,
+				newObject;
+
+				if (typeof ObjectCreater[constructor] !== "function")
+					throw "constructor " + constructor + " doesnt exist";
+
+				if (typeof ObjectCreater[constructor].prototype.drive !== "function")
+					ObjectCreater[constructor].prototype = new ObjectCreater();
+
+				newObject = new ObjectCreater[constructor]();
+				return newObject;
+			};
+
+			/*konkrete Produkte */
+			ObjectCreater.Compact = function () {
+				this.name = "Compact";
+			};
+
+			ObjectCreater.Convertible = function () {
+				this.name = "Convertible";
+			};
+
+			ObjectCreater.SUV = function () {
+				this.name = "SUV";
+			};
+
+			var compact = ObjectCreater.factory("Compact");
+			compact.whoAmI();
+			debugger;
+		</script>
+	</body>
+</html>

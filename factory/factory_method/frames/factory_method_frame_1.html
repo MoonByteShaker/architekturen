@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>factory method scaffolfd 1</title>
+	</head>
+	<body>
+		<script charset="utf-8">
+			var inheritFromAbtractType = function(abstractType, object) {
+				var newObject = Object.create(abstractType);
+				for (var prop in object) {
+					if (object.hasOwnProperty(prop)) {
+						newObject[prop] = object[prop];
+					}
+				}
+			  return newObject;
+			};
+
+			var AbstractBasisProduct = {
+				description: 'Plain Generic Product'
+			};
+
+			var AbstractBasisProductFactory = {
+				createProduct: function(type) {
+					switch (type) {
+						case "first":
+							return inheritFromAbtractType(AbstractBasisProduct, {
+								description: 'first, Generic Basis Product'
+							});
+							break;
+						case "second":
+							return inheritFromAbtractType(AbstractBasisProduct, {
+								description: 'second, Generic Basis Product'
+							});
+							break;
+						default:
+					}
+				}
+			};
+
+			var AbstractExtensionProductFactoryOne = inheritFromAbtractType(AbstractBasisProductFactory, {
+				createProduct: function(type) {
+					switch (type) {
+						case "first":
+							return inheritFromAbtractType(AbstractBasisProduct, {
+								description: 'first, Generic Derivat Product'
+							});
+							break;
+						case "second":
+							return inheritFromAbtractType(AbstractBasisProduct, {
+								description: 'second, Generic Derivat Product'
+							});
+							break;
+						default:
+					}
+				}
+			});
+
+			var firstConcretBasisProductFactory = Object.create(AbstractBasisProductFactory);
+			var firstConcretBasisProduct = firstConcretBasisProductFactory.createProduct("first");
+
+			var firstConcretDerivatFactory = Object.create(AbstractExtensionProductFactoryOne);
+			var firstConcretDerivatProduct = firstConcretDerivatFactory.createProduct("first");
+			debugger;
+
+		</script>
+	</body>
+</html>

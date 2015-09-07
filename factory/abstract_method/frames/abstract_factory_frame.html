@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>abstract factory frame 1</title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var inheritFromAbtractType = function(abstractType, object) {
+				var newObject = Object.create(abstractType);
+				for (var prop in object) {
+					if (object.hasOwnProperty(prop)) {
+						newObject[prop] = object[prop];
+					}
+				}
+			  return newObject;
+			};
+
+			var Ingredients = {
+				createDough: function() {
+					return 'generic dough';
+				},
+				createSauce: function() {
+					return 'generic sauce';
+				},
+				createCrust: function() {
+					return 'generic crust';
+				}
+			};
+
+			Ingredients.createChicagoStyle = function() {
+			    return inheritFromAbtractType(Ingredients, {
+			        createDough: function() {
+			            return 'thick, heavy dough';
+			        },
+			        createSauce: function() {
+			            return 'rich marinara';
+			        },
+			        createCrust: function() {
+			            return 'deep-dish';
+			        }
+			    });
+			};
+
+			Ingredients.createCaliforniaStyle = function() {
+			    return inheritFromAbtractType(Ingredients, {
+			        createDough: function() {
+			            return 'light, fluffy dough';
+			        },
+			        createSauce: function() {
+			            return 'tangy redio sauce';
+			        },
+			        createCrust: function() {
+			            return 'thin and crispy';
+			        }
+			    });
+			};
+
+			var californiaIngredients = Ingredients.createCaliforniaStyle();
+				californiaIngredients.createCrust(); // returns 'thin and crispy';
+			debugger;
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>singleton_scaffold_3</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var Singleton = function () {
+                if (!(this instanceof Singleton))
+                    return new Singleton();
+                var init = false,
+                    that = this;
+
+                Singleton = function () {
+                    if (init)
+                        return that;
+                    init = true;
+                    that.test1 = function () {
+                        return "test1";
+                    };
+                    that.test2 = function () {
+                        return "test2";
+                    };
+                }
+            };
+            debugger;
+        </script>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>singleton_scaffold_2</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var Singleton;
+            (function () {
+                var instance;
+                Singleton = function Singleton () {
+                    if (instance)
+                        return instance;
+                    this.test1 = function () {
+                        return "test1";
+                    };
+                    this.test2 = function () {
+                        return "test2";
+                    };
+                };
+            })();
+            debugger;
+        </script>
+    </body>
+</html>

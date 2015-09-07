@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>simple factory example 1</title>
+	</head>
+	<body>
+		<script charset="utf-8">
+			function CarMaker() {}
+
+			CarMaker.prototype.drive = function () {
+				return "Brumm, ich habe " + this.doors + " Türen";
+			};
+
+			CarMaker.factory = function (type) {
+				var constructor = type,
+				newcar;
+
+				if (typeof CarMaker[constructor] !== "function")
+					throw "constructor " + constructor + " doesnt exist";
+
+				if (typeof CarMaker[constructor].prototype.drive !== "function")
+					CarMaker[constructor].prototype = new CarMaker();
+
+				newcar = new CarMaker[constructor]();
+				return newcar;
+			};
+
+			CarMaker.Compact = function () {
+				this.doors = 4;
+			};
+
+			CarMaker.Convertible = function () {
+				this.doors = 2;
+			};
+
+			CarMaker.SUV = function () {
+				this.doors = 24;
+			};
+
+			var corolla = CarMaker.factory("Compact");
+			corolla.drive();
+			debugger;
+		</script>
+	</body>
+</html>

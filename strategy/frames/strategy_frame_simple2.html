@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>simple strategy 1</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var data = "data";
+            var strategy = {
+                strategyFunction: function () {
+                    return "not set";
+                },
+                setStrategy: function (strategy) {
+                    this.strategyFunction = strategy;
+                },
+                applyStrategy: function (data) {
+                    return this.strategyFunction.applyStrategy(data);
+                }
+            };
+
+            var strategyPool = {
+                strategyOne: {
+                    applyStrategy: function (data) {
+                        return "strategyOne: " + data;
+                    }
+                },
+                strategyTwo: {
+                    applyStrategy: function (data) {
+                        return "strategyTwo: " + data;
+                    }
+                }
+            };
+
+            strategy.setStrategy(strategyPool.strategyOne);
+            var output = strategy.applyStrategy(data);
+            debugger;
+        </script>
+    </body>
+</html>

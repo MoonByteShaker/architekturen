@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>simple strategy 1</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var dataSet = {
+                dataElement1:"contentToBeChecked1",
+                dataElement2:"contentToBeChecked2"
+            };
+            var strategy = {
+                config: {
+                    dataElement1:'strategyOne',
+                    dataElement2:'strategyTwo',
+                },
+                strategyFunction: function () {},
+                applyStrategy: function (data) {
+                    var strategyType,
+                        dataKey,
+                        output = [];
+
+                    for (dataKey in data) {
+                        strategyType = this.config[dataKey];
+
+                        if (!strategyType) {
+                            output.push(data[dataKey] + ": no strategy configred");
+                            continue;
+                        }
+
+                        this.strategyFunction = strategyPool[strategyType];
+
+                        if (!this.strategyFunction)
+                            throw "configed strategy not found";
+
+                        output.push(this.strategyFunction.applyStrategy(data[dataKey]));
+                    }
+                    return output;
+                }
+            };
+
+            var strategyPool = {
+                strategyOne: {
+                    applyStrategy: function (data) {
+                        return "strategyOne: " + data;
+                    }
+                },
+                strategyTwo: {
+                    applyStrategy: function (data) {
+                        return "strategyTwo: " + data;
+                    }
+                }
+            };
+
+            var output = strategy.applyStrategy(dataSet);
+            debugger;
+        </script>
+    </body>
+</html>

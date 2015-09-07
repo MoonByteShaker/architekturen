@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>simple strategy 1</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var data = "data";
+            var strategyPool = {
+                strategyOne: {
+                    applyStrategy: function (data) {
+                        return "strategyOne: " + data;
+                    }
+                },
+                strategyTwo: {
+                    applyStrategy: function (data) {
+                        return "strategyTwo: " + data;
+                    }
+                }
+            };
+            var strategyFunction = strategyPool.strategyOne;
+            var output = strategyFunction.applyStrategy(data);
+            debugger;
+
+            /*strategyFunction kann als "Interface" gesehen werden.
+             Diese Struktur folgt dem Prinzip der Kapselung und Delegation.
+             Die hieraus folgende Komposition hat ein Vorteil gegenüber der Vererbung.
+             Sie ist leichter anpassbar da auf eine Schnittstelle programmiert wird, sie ruft weniger Seiteneffekte hervor, prodziert weniger Overhead und ist während der Laufzeit veränderbar.
+             Interfaces erlauben Polymorphismus und damit auch generische Funktionen.*/
+        </script>
+    </body>
+</html>
