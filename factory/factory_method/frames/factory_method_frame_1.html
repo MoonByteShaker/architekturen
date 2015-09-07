@@ -2,53 +2,49 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>factory method scaffolfd 1</title>
+		<title>factory method frame 1</title>
 	</head>
 	<body>
 		<script charset="utf-8">
-			var inheritFromAbtractType = function(abstractType, object) {
+			var inheritFromAbtractObject = function(abstractType, object) {
 				var newObject = Object.create(abstractType);
 				for (var prop in object) {
-					if (object.hasOwnProperty(prop)) {
+					if (object.hasOwnProperty(prop))
 						newObject[prop] = object[prop];
-					}
 				}
-			  return newObject;
+				return newObject;
 			};
 
-			var AbstractBasisProduct = {
-				description: 'Plain Generic Product'
-			};
-
-			var AbstractBasisProductFactory = {
-				createProduct: function(type) {
-					switch (type) {
-						case "first":
-							return inheritFromAbtractType(AbstractBasisProduct, {
-								description: 'first, Generic Basis Product'
-							});
-							break;
-						case "second":
-							return inheritFromAbtractType(AbstractBasisProduct, {
-								description: 'second, Generic Basis Product'
-							});
-							break;
-						default:
-					}
+			var abstractProduct = {
+				description: 'abstract product',
+				getDescription: function () {
+					return this.description;
 				}
 			};
 
-			var AbstractExtensionProductFactoryOne = inheritFromAbtractType(AbstractBasisProductFactory, {
+			var abstractObjectCreator = {
+				/*factory-method*/
+				createProduct: function(type) {
+					throw new Error('Please implement the abstract method: "createProduct" from "abstractObjectCreator"');
+				},
+				/*none factory method code*/
+				askForProduct: function (type) {
+					return this.createProduct(type);
+				}
+			};
+
+			var objectCreator_1 = inheritFromAbtractObject(abstractObjectCreator, {
+				/*factory-method*/
 				createProduct: function(type) {
 					switch (type) {
 						case "first":
-							return inheritFromAbtractType(AbstractBasisProduct, {
-								description: 'first, Generic Derivat Product'
+							return inheritFromAbtractObject(abstractProduct, {
+								description: 'first, product from objectCreator_1'
 							});
 							break;
 						case "second":
-							return inheritFromAbtractType(AbstractBasisProduct, {
-								description: 'second, Generic Derivat Product'
+							return inheritFromAbtractObject(abstractProduct, {
+								description: 'second, product from objectCreator_1'
 							});
 							break;
 						default:
@@ -56,13 +52,33 @@
 				}
 			});
 
-			var firstConcretBasisProductFactory = Object.create(AbstractBasisProductFactory);
-			var firstConcretBasisProduct = firstConcretBasisProductFactory.createProduct("first");
+			var objectCreator_2 = inheritFromAbtractObject(abstractObjectCreator, {
+				/*factory-method*/
+				createProduct: function(type) {
+					switch (type) {
+						case "first":
+							return inheritFromAbtractObject(abstractProduct, {
+								description: 'first, product from objectCreator_2'
+							});
+							break;
+						case "second":
+							return inheritFromAbtractObject(abstractProduct, {
+								description: 'second, product from objectCreator_2'
+							});
+							break;
+						default:
+					}
+				}
+			});
 
-			var firstConcretDerivatFactory = Object.create(AbstractExtensionProductFactoryOne);
-			var firstConcretDerivatProduct = firstConcretDerivatFactory.createProduct("first");
+			/*zwei unterschiedliche Hersteller erstellen*/
+			var objectCreater_1 = Object.create(objectCreator_1);
+			var objectCreater_2 = Object.create(objectCreator_2);
+
+			/*zwei Produkte erhalten*/
+			var firstProduct = objectCreater_1.askForProduct('first');
+			var secondProduct = objectCreater_2.askForProduct('second');
 			debugger;
-
 		</script>
 	</body>
 </html>

@@ -6,40 +6,40 @@
 	</head>
 	<body>
 		<script charset="utf-8">
-			function ObjectCreater() {}
+			function ObjectCreator() {}
 
-			ObjectCreater.prototype.whoAmI = function () {
+			ObjectCreator.prototype.whoAmI = function () {
 				return "I am " + this.name;
 			};
 
-			ObjectCreater.factory = function (type) {
+			ObjectCreator.factory = function (type) {
 				var constructor = type,
 				newObject;
 
-				if (typeof ObjectCreater[constructor] !== "function")
+				if (typeof ObjectCreator[constructor] !== "function")
 					throw "constructor " + constructor + " doesnt exist";
 
-				if (typeof ObjectCreater[constructor].prototype.drive !== "function")
-					ObjectCreater[constructor].prototype = new ObjectCreater();
+				if (typeof ObjectCreator[constructor].prototype.drive !== "function")
+					ObjectCreator[constructor].prototype = new ObjectCreator();
 
-				newObject = new ObjectCreater[constructor]();
+				newObject = new ObjectCreator[constructor]();
 				return newObject;
 			};
 
 			/*konkrete Produkte */
-			ObjectCreater.Compact = function () {
+			ObjectCreator.Compact = function () {
 				this.name = "Compact";
 			};
 
-			ObjectCreater.Convertible = function () {
+			ObjectCreator.Convertible = function () {
 				this.name = "Convertible";
 			};
 
-			ObjectCreater.SUV = function () {
+			ObjectCreator.SUV = function () {
 				this.name = "SUV";
 			};
 
-			var compact = ObjectCreater.factory("Compact");
+			var compact = ObjectCreator.factory("Compact");
 			compact.whoAmI();
 			debugger;
 		</script>
