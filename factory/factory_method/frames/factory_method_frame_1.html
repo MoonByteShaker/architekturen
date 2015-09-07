@@ -22,10 +22,10 @@
 				}
 			};
 
-			var abstractObjectCreator = {
+			var abstractProductCreator = {
 				/*factory-method*/
 				createProduct: function(type) {
-					throw new Error('Please implement the abstract method: "createProduct" from "abstractObjectCreator"');
+					throw new Error('Please implement the abstract method: "createProduct" from "abstractProductCreator"');
 				},
 				/*none factory method code*/
 				askForProduct: function (type) {
@@ -33,18 +33,18 @@
 				}
 			};
 
-			var objectCreator_1 = inheritFromAbtractObject(abstractObjectCreator, {
+			var productCreator_1 = inheritFromAbtractObject(abstractProductCreator, {
 				/*factory-method*/
 				createProduct: function(type) {
 					switch (type) {
 						case "first":
 							return inheritFromAbtractObject(abstractProduct, {
-								description: 'first, product from objectCreator_1'
+								description: 'first, product from productCreator_1'
 							});
 							break;
 						case "second":
 							return inheritFromAbtractObject(abstractProduct, {
-								description: 'second, product from objectCreator_1'
+								description: 'second, product from productCreator_1'
 							});
 							break;
 						default:
@@ -52,18 +52,18 @@
 				}
 			});
 
-			var objectCreator_2 = inheritFromAbtractObject(abstractObjectCreator, {
+			var productCreator_2 = inheritFromAbtractObject(abstractProductCreator, {
 				/*factory-method*/
 				createProduct: function(type) {
 					switch (type) {
 						case "first":
 							return inheritFromAbtractObject(abstractProduct, {
-								description: 'first, product from objectCreator_2'
+								description: 'first, product from productCreator_2'
 							});
 							break;
 						case "second":
 							return inheritFromAbtractObject(abstractProduct, {
-								description: 'second, product from objectCreator_2'
+								description: 'second, product from productCreator_2'
 							});
 							break;
 						default:
@@ -72,12 +72,12 @@
 			});
 
 			/*zwei unterschiedliche Hersteller erstellen*/
-			var objectCreater_1 = Object.create(objectCreator_1);
-			var objectCreater_2 = Object.create(objectCreator_2);
+			var productCreater_1 = Object.create(productCreator_1);
+			var productCreater_2 = Object.create(productCreator_2);
 
 			/*zwei Produkte erhalten*/
-			var firstProduct = objectCreater_1.askForProduct('first');
-			var secondProduct = objectCreater_2.askForProduct('second');
+			var firstProduct = productCreater_1.askForProduct('first');
+			var secondProduct = productCreater_2.askForProduct('second');
 			debugger;
 		</script>
 	</body>
