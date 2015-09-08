@@ -140,12 +140,18 @@
 				}
 			});
 
-			/*einen Hersteller erstellen*/
+			/*zwei Hersteller erstellen*/
 			var instanceOfObjectCreator_1 = Object.create(objectCreator_1);
+			var instanceOfObjectCreator_2 = Object.create(objectCreator_2);
 
-			/*zwei Objekte mit einer produkteigenen Produktfamilie erhalten*/
-			var firstObject = instanceOfObjectCreator_1.askForProduct('first');
-			var secondObject = instanceOfObjectCreator_1.askForProduct('second');
+			/*Objekte mit einer objekteigenen Produktfamilie erhalten*/
+			/*Die Produjtfamilien sind untereinander austauschbar*/
+			var factory_1_firstObject = instanceOfObjectCreator_1.askForProduct('first');
+			var factory_1_secondObject = instanceOfObjectCreator_1.askForProduct('second');
+
+			/*zwei Objekte mit einer objekteigenen Produktfamilie erhalten*/
+			var factory_2_firstObject = instanceOfObjectCreator_2.askForProduct('first');
+			var factory_2_secondObject = instanceOfObjectCreator_2.askForProduct('second');
 			debugger;
 		</script>
 	</body>
