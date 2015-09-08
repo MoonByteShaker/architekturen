@@ -106,10 +106,44 @@
 				}
 			});
 
+			var objectCreator_2 = inheritFromAbstractObject(abstractObjectCreator, {
+				/*factory-method*/
+				createObject: function(type) {
+					var factory = factory_2;
+					var object;
+					switch (type) {
+						case "first":
+							object = inheritFromAbstractObject(abstractObject, {
+								description: 'first object from objectCreator_2',
+								abstractMethod: function () {
+									return {
+										product_1: factory.createProduct_1(),
+										product_2: factory.createProduct_2()
+									};
+								}
+							});
+							break;
+						case "second":
+							object = inheritFromAbstractObject(abstractObject, {
+								description: 'second object from objectCreator_2',
+								abstractMethod: function () {
+									return {
+										product_1: factory.createProduct_1(),
+										product_3: factory.createProduct_3()
+									};
+								}
+							});
+							break;
+						default:
+					}
+					return object;
+				}
+			});
+
 			/*einen Hersteller erstellen*/
 			var instanceOfObjectCreator_1 = Object.create(objectCreator_1);
 
-			/*zwei Produkte erhalten*/
+			/*zwei Objekte mit einer produkteigenen Produktfamilie erhalten*/
 			var firstObject = instanceOfObjectCreator_1.askForProduct('first');
 			var secondObject = instanceOfObjectCreator_1.askForProduct('second');
 			debugger;
