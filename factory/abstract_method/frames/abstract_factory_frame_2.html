@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>factory method frame 1</title>
+	</head>
+	<body>
+		<script charset="utf-8">
+			var inheritFromAbstractObject = function(abstractType, object) {
+				var newObject = Object.create(abstractType);
+				for (var prop in object) {
+					if (object.hasOwnProperty(prop))
+						newObject[prop] = object[prop];
+				}
+				return newObject;
+			};
+
+			var abstractObject = {
+				description: 'abstract object',
+				getDescription: function () {
+					return this.description;
+				},
+				/*abstract fabric*/
+				abstractMethod: function () {
+					throw new Error('Please implement the abstract method: "abstractMethod" from "abstractObject"');
+				}
+			};
+
+			var abstractFactory = {
+				createProduct_1: function(type) {
+					throw new Error('Please implement the abstract method: "createProduct_1" from "abstractFactory"');
+				},
+				createProduct_2: function(type) {
+					throw new Error('Please implement the abstract method: "createProduct_2" from "abstractFactory"');
+				},
+				createProduct_3: function(type) {
+					throw new Error('Please implement the abstract method: "createProduct_3" from "abstractFactory"');
+				},
+			};
+
+			var factory_1 = inheritFromAbstractObject(abstractFactory, {
+				createProduct_1: function () {
+					return "first product from factory_1";
+				},
+				createProduct_2: function () {
+					return "second product from factory_1";
+				},
+				createProduct_3: function () {
+					return "third product from factory_1";
+				},
+			});
+
+			var factory_2 = inheritFromAbstractObject(abstractFactory, {
+				createProduct_1: function () {
+					return "first product from factory_2";
+				},
+				createProduct_2: function () {
+					return "second product from factory_2";
+				},
+				createProduct_3: function () {
+					return "third product from factory_2";
+				},
+			});
+
+			var abstractObjectCreator = {
+				createObject: function(type) {
+					throw new Error('Please implement the abstract method: "createObject" from "abstractObjectCreator"');
+				},
+				/*product-methods and members*/
+				askForProduct: function (type) {
+					return this.createObject(type);
+				}
+			};
+
+			var objectCreator_1 = inheritFromAbstractObject(abstractObjectCreator, {
+				/*factory-method*/
+				createObject: function(type) {
+					var factory = factory_1;
+					var object;
+					switch (type) {
+						case "first":
+							object = inheritFromAbstractObject(abstractObject, {
+								description: 'first object from objectCreator_1',
+								abstractMethod: function () {
+									return {
+										product_1: factory.createProduct_1(),
+										product_2: factory.createProduct_2()
+									};
+								}
+							});
+							break;
+						case "second":
+							object = inheritFromAbstractObject(abstractObject, {
+								description: 'second object from objectCreator_1',
+								abstractMethod: function () {
+									return {
+										product_1: factory.createProduct_1(),
+										product_3: factory.createProduct_3()
+									};
+								}
+							});
+							break;
+						default:
+					}
+					return object;
+				}
+			});
+
+			/*einen Hersteller erstellen*/
+			var instanceOfObjectCreator_1 = Object.create(objectCreator_1);
+
+			/*zwei Produkte erhalten*/
+			var firstObject = instanceOfObjectCreator_1.askForProduct('first');
+			var secondObject = instanceOfObjectCreator_1.askForProduct('second');
+			debugger;
+		</script>
+	</body>
+</html>
