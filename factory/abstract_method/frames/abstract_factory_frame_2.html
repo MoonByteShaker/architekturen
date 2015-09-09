@@ -26,6 +26,17 @@
 				}
 			};
 
+			var abstractObjectCreator = {
+				createObject: function(type) {
+					throw new Error('Please implement the abstract method: "createObject" from "abstractObjectCreator"');
+				},
+				/*product-methods and members*/
+				askForProduct: function (type) {
+					return this.createObject(type);
+				}
+			};
+
+			/*abstrakter Typ für die Erstellung von Produktfamilien*/
 			var abstractFactory = {
 				createProduct_1: function(type) {
 					throw new Error('Please implement the abstract method: "createProduct_1" from "abstractFactory"');
@@ -61,16 +72,6 @@
 					return "third product from factory_2";
 				},
 			});
-
-			var abstractObjectCreator = {
-				createObject: function(type) {
-					throw new Error('Please implement the abstract method: "createObject" from "abstractObjectCreator"');
-				},
-				/*product-methods and members*/
-				askForProduct: function (type) {
-					return this.createObject(type);
-				}
-			};
 
 			var objectCreator_1 = inheritFromAbstractObject(abstractObjectCreator, {
 				/*factory-method*/
@@ -140,17 +141,16 @@
 				}
 			});
 
-			/*zwei Hersteller erstellen*/
+			/*zwei Hersteller mit eigenen Fabriken erstellen*/
 			var instanceOfObjectCreator_1 = Object.create(objectCreator_1);
 			var instanceOfObjectCreator_2 = Object.create(objectCreator_2);
 
-			/*Objekte mit einer objekteigenen Produktfamilie erhalten*/
-			/*Die Produjtfamilien sind untereinander austauschbar*/
+			/*Die erhaltenen generischen Objekte enthalten eine generische Produktfamilie.
+			Sie ist untereinander austauschbar*/
 			var factory_1_firstObject = instanceOfObjectCreator_1.askForProduct('first');
-			var factory_1_secondObject = instanceOfObjectCreator_1.askForProduct('second');
-
-			/*zwei Objekte mit einer objekteigenen Produktfamilie erhalten*/
 			var factory_2_firstObject = instanceOfObjectCreator_2.askForProduct('first');
+
+			var factory_1_secondObject = instanceOfObjectCreator_1.askForProduct('second');
 			var factory_2_secondObject = instanceOfObjectCreator_2.askForProduct('second');
 			debugger;
 		</script>
