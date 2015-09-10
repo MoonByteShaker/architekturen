@@ -6,37 +6,43 @@
 	</head>
 	<body>
 		<script charset="utf-8">
-			var inheritFromAbstractObject = function(abstractType, object) {
-				var newObject = Object.create(abstractType);
-				for (var prop in object) {
-					if (object.hasOwnProperty(prop))
-						newObject[prop] = object[prop];
+			var inheritAndSetMembers = function(parentObj, memberObj) {
+				var newObject = Object.create(parentObj);
+				for (var prop in memberObj) {
+					if (memberObj.hasOwnProperty(prop))
+						newObject[prop] = memberObj[prop];
 				}
 				return newObject;
 			};
 
+			/*product familiy container*/
 			var abstractObject = {
+				/*normal object methods*/
 				description: 'abstract object',
 				getDescription: function () {
 					return this.description;
 				},
-				/*abstract fabric*/
-				abstractMethod: function () {
-					throw new Error('Please implement the abstract method: "abstractMethod" from "abstractObject"');
+				/*product familiy method */
+				getProductFamiliyMember: function () {
+					throw new Error('Please implement the abstract method: "getProductFamiliyMember" from "abstractObject"');
 				}
 			};
 
+			/*creator of product familiy container*/
 			var abstractObjectCreator = {
+				/*factory-method of creator*/
 				createObject: function(type) {
 					throw new Error('Please implement the abstract method: "createObject" from "abstractObjectCreator"');
 				},
-				/*product-methods and members*/
-				askForProduct: function (type) {
-					return this.createObject(type);
+				/*generic use of product familiy */
+				askForProductContainer: function (type) {
+					var productFamiliyContainer = this.createObject(type);
+					productFamiliyContainer.member = productFamiliyContainer.getProductFamiliyMember();
+					return productFamiliyContainer;
 				}
 			};
 
-			/*abstrakter Typ für die Erstellung von Produktfamilien*/
+			/*basis contract for product families*/
 			var abstractFactory = {
 				createProduct_1: function(type) {
 					throw new Error('Please implement the abstract method: "createProduct_1" from "abstractFactory"');
@@ -49,7 +55,9 @@
 				},
 			};
 
-			var factory_1 = inheritFromAbstractObject(abstractFactory, {
+			/*concrete product familiy*/
+			var factory_1 = inheritAndSetMembers(abstractFactory, {
+				/*factory-methods*/
 				createProduct_1: function () {
 					return "first product from factory_1";
 				},
@@ -61,7 +69,9 @@
 				},
 			});
 
-			var factory_2 = inheritFromAbstractObject(abstractFactory, {
+			/*concrete product familiy*/
+			var factory_2 = inheritAndSetMembers(abstractFactory, {
+				/*factory-methods*/
 				createProduct_1: function () {
 					return "first product from factory_2";
 				},
@@ -73,16 +83,16 @@
 				},
 			});
 
-			var objectCreator_1 = inheritFromAbstractObject(abstractObjectCreator, {
+			var objectCreator_1 = inheritAndSetMembers(abstractObjectCreator, {
 				/*factory-method*/
 				createObject: function(type) {
 					var factory = factory_1;
 					var object;
 					switch (type) {
 						case "first":
-							object = inheritFromAbstractObject(abstractObject, {
+							object = inheritAndSetMembers(abstractObject, {
 								description: 'first object from objectCreator_1',
-								abstractMethod: function () {
+								getProductFamiliyMember: function () {
 									return {
 										product_1: factory.createProduct_1(),
 										product_2: factory.createProduct_2()
@@ -91,9 +101,9 @@
 							});
 							break;
 						case "second":
-							object = inheritFromAbstractObject(abstractObject, {
+							object = inheritAndSetMembers(abstractObject, {
 								description: 'second object from objectCreator_1',
-								abstractMethod: function () {
+								getProductFamiliyMember: function () {
 									return {
 										product_1: factory.createProduct_1(),
 										product_3: factory.createProduct_3()
@@ -107,16 +117,16 @@
 				}
 			});
 
-			var objectCreator_2 = inheritFromAbstractObject(abstractObjectCreator, {
+			var objectCreator_2 = inheritAndSetMembers(abstractObjectCreator, {
 				/*factory-method*/
 				createObject: function(type) {
 					var factory = factory_2;
 					var object;
 					switch (type) {
 						case "first":
-							object = inheritFromAbstractObject(abstractObject, {
+							object = inheritAndSetMembers(abstractObject, {
 								description: 'first object from objectCreator_2',
-								abstractMethod: function () {
+								getProductFamiliyMember: function () {
 									return {
 										product_1: factory.createProduct_1(),
 										product_2: factory.createProduct_2()
@@ -125,9 +135,9 @@
 							});
 							break;
 						case "second":
-							object = inheritFromAbstractObject(abstractObject, {
+							object = inheritAndSetMembers(abstractObject, {
 								description: 'second object from objectCreator_2',
-								abstractMethod: function () {
+								getProductFamiliyMember: function () {
 									return {
 										product_1: factory.createProduct_1(),
 										product_3: factory.createProduct_3()
@@ -147,11 +157,11 @@
 
 			/*Die erhaltenen generischen Objekte enthalten eine generische Produktfamilie.
 			Sie ist untereinander austauschbar*/
-			var factory_1_firstObject = instanceOfObjectCreator_1.askForProduct('first');
-			var factory_2_firstObject = instanceOfObjectCreator_2.askForProduct('first');
+			var factory_1_firstObject = instanceOfObjectCreator_1.askForProductContainer('first');
+			var factory_2_firstObject = instanceOfObjectCreator_2.askForProductContainer('first');
 
-			var factory_1_secondObject = instanceOfObjectCreator_1.askForProduct('second');
-			var factory_2_secondObject = instanceOfObjectCreator_2.askForProduct('second');
+			var factory_1_secondObject = instanceOfObjectCreator_1.askForProductContainer('second');
+			var factory_2_secondObject = instanceOfObjectCreator_2.askForProductContainer('second');
 			debugger;
 		</script>
 	</body>

@@ -6,11 +6,11 @@
 	</head>
 	<body>
 		<script charset="utf-8">
-			var inheritFromAbtractObject = function(abstractType, object) {
-				var newObject = Object.create(abstractType);
-				for (var prop in object) {
-					if (object.hasOwnProperty(prop))
-						newObject[prop] = object[prop];
+			var inheritAndSetMembers = function(parentObj, memberObj) {
+				var newObject = Object.create(parentObj);
+				for (var prop in memberObj) {
+					if (memberObj.hasOwnProperty(prop))
+						newObject[prop] = memberObj[prop];
 				}
 				return newObject;
 			};
@@ -33,36 +33,36 @@
 				}
 			};
 
-			var productCreator_1 = inheritFromAbtractObject(abstractProductCreator, {
+			var productCreator_1 = inheritAndSetMembers(abstractProductCreator, {
 				/*factory-method*/
 				createProduct: function(type) {
 					switch (type) {
 						case "first":
-							return inheritFromAbtractObject(abstractProduct, {
+							return inheritAndSetMembers(abstractProduct, {
 								description: 'first, product from productCreator_1'
 							});
 							break;
 						case "second":
-							return inheritFromAbtractObject(abstractProduct, {
+							return inheritAndSetMembers(abstractProduct, {
 								description: 'second, product from productCreator_1'
 							});
 							break;
 						default:
-					}
+					};
 				}
 			});
 
-			var productCreator_2 = inheritFromAbtractObject(abstractProductCreator, {
+			var productCreator_2 = inheritAndSetMembers(abstractProductCreator, {
 				/*factory-method*/
 				createProduct: function(type) {
 					switch (type) {
 						case "first":
-							return inheritFromAbtractObject(abstractProduct, {
+							return inheritAndSetMembers(abstractProduct, {
 								description: 'first, product from productCreator_2'
 							});
 							break;
 						case "second":
-							return inheritFromAbtractObject(abstractProduct, {
+							return inheritAndSetMembers(abstractProduct, {
 								description: 'second, product from productCreator_2'
 							});
 							break;
